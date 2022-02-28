@@ -120,3 +120,5 @@ interaction_count <- ufo_data %>% na.omit() %>%
 
 
 chisq.test(interaction_count)
+
+# Professor suggestion: Correlation coefficient
