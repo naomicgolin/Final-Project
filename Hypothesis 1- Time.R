@@ -22,7 +22,9 @@ library(grid)
 library(viridisLite)
 library(gifski)
 
-source(file="ufo_data.R")
+# Dataset
+source(file="ufo_data.R") # Created in file named "Data Cleaning.R"
+
 ## Obtaining total population of the US
 webpage_time <- "https://en.wikipedia.org/wiki/Demographics_of_the_United_States"
 
