@@ -112,4 +112,11 @@ ufo_state_decade_map_combined_100000 <- tm_shape(ufo_state_decade_combined_map) 
             legend.text.size = 0.6)
 ufo_state_decade_map_combined_100000
   
+# Statistical Test: Chi-square
 
+interaction_count <- ufo_data %>% na.omit() %>%
+  group_by(regions, Year) %>%
+  tally() %>% spread(regions, n)
+
+
+chisq.test(interaction_count)
