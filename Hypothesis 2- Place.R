@@ -111,5 +111,14 @@ ufo_data_new <- ufo_data %>%
   
 hyp_2_data <- merge(ufo_data_new, population_df_new, by = "regions", all.y = TRUE) %>% 
   mutate("percentage" = count / population)
+hyp_2_data <- hyp_2_data %>% 
+  mutate("per_100000" = 100000 * percentage)
 
+hyp_2_data <- hyp_2_data %>% 
+  mutate("actual_p" = population / sum(population))
+
+hyp_2_chi <- chisq.test(hyp_2_data$per_100000, p = hyp_2_data$actual_p)
+hyp_2_chi
+hyp_2_chi$observed - hyp_2_chi$expected
+# -98.75471 -125.48656  -73.37824  297.61951
 
