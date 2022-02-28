@@ -21,7 +21,7 @@ library(ggplot2)
 library(grid)
 library(viridisLite)
 library(gifski)
-rm(list=ls())
+
 source(file="ufo_data.R") # Created in file named "Data Cleaning.R"
 source(file="state_population.R") # Created in file named "State Population df.R"
 
