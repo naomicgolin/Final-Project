@@ -65,6 +65,7 @@ ufo_place_100000 <- tm_shape(ufo_place) +
 ufo_place_100000
 
 # Statistical Test
+
 ## States were split into regions:
 
 regions <- list(
@@ -78,6 +79,7 @@ regions <- list(
                 "NJ", "CT", "DE", "MD")
 )
 
+### Dian's/Evan's Analysis:
 ufo_data$regions <- sapply(ufo_data$state,
                            function(x) names(regions)[grep(x,regions)])
 
@@ -93,15 +95,15 @@ regions_test$observed - regions_test$expected
 ### West: 4450 more cases reported than expected
 
 
+### Statistical test by population percentage
 population_df_new <- population_df %>% 
   group_by(state) %>% 
   mutate("regions" = ifelse(state %in% regions$west, "west",
                            ifelse(state %in% regions$south, "south",
-                                  ifelse(state %in% regions$midwest, "midwest", "northeast"))),
-         "total" = sum(`1970`, `1980`, `1990`, `2000`, `2010`))
+                                  ifelse(state %in% regions$midwest, "midwest", "northeast"))))
 population_df_new <- population_df_new %>% 
   group_by(regions) %>% 
-  summarise("population" = sum(total))
+  summarise("population" = mean(mean))
 
 ufo_data_new <- ufo_data %>% 
   group_by(regions) %>% 
@@ -109,3 +111,5 @@ ufo_data_new <- ufo_data %>%
   
 hyp_2_data <- merge(ufo_data_new, population_df_new, by = "regions", all.y = TRUE) %>% 
   mutate("percentage" = count / population)
+
+
