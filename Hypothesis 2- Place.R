@@ -64,4 +64,30 @@ ufo_place_100000 <- tm_shape(ufo_place) +
             legend.text.size = 0.6)
 ufo_place_100000
 
-# Statistical Test? 
+# Statistical Test
+## States were split into regions:
+
+regions <- list(
+  west = c("WA", "OR", "CA", "NV", "AZ", "ID", "MT", "WY",
+           "CO", "NM", "UT", "AK", "HI"),
+  south = c("TX", "OK", "AR", "LA", "MS", "AL", "TN", "KY",
+            "GA", "FL", "SC", "NC", "VA", "WV"),
+  midwest = c("KS", "NE", "SD", "ND", "MN", "MO", "IA", "IL",
+              "IN", "MI", "WI", "OH"),
+  northeast = c("ME", "NH", "NY", "MA", "RI", "VT", "PA",
+                "NJ", "CT", "DE", "MD")
+)
+
+ufo_data$regions <- sapply(ufo_data$state,
+                           function(x) names(regions)[grep(x,regions)])
+
+region_count <- ufo_data %>% na.omit() %>%
+  group_by(regions) %>%
+  summarise("count" = n())
+
+(regions_test <- chisq.test(region_count$count, p = c(12/50, 11/50, 14/50, 13/50)))
+regions_test$observed - regions_test$expected
+### Midwest: 2732 less cases reported than expected
+### Northeast: 2265 less cases reported than expected
+### South: 547 more cases reported than expected
+### West: 4450 more cases reported than expected
