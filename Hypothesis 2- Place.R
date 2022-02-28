@@ -91,3 +91,21 @@ regions_test$observed - regions_test$expected
 ### Northeast: 2265 less cases reported than expected
 ### South: 547 more cases reported than expected
 ### West: 4450 more cases reported than expected
+
+
+population_df_new <- population_df %>% 
+  group_by(state) %>% 
+  mutate("regions" = ifelse(state %in% regions$west, "west",
+                           ifelse(state %in% regions$south, "south",
+                                  ifelse(state %in% regions$midwest, "midwest", "northeast"))),
+         "total" = sum(`1970`, `1980`, `1990`, `2000`, `2010`))
+population_df_new <- population_df_new %>% 
+  group_by(regions) %>% 
+  summarise("population" = sum(total))
+
+ufo_data_new <- ufo_data %>% 
+  group_by(regions) %>% 
+  summarise("count" = n())
+  
+hyp_2_data <- merge(ufo_data_new, population_df_new, by = "regions", all.y = TRUE) %>% 
+  mutate("percentage" = count / population)
