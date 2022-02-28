@@ -1,6 +1,7 @@
 library(readr)
 library(dplyr)
 
+# See Kaggle link to obtain dataset
 ufo_data <- read_csv("~/Desktop/UCLA/Senior/Winter/Statistics 140XP/EDA/nuforc_reports.csv")
 
 
