@@ -1,6 +1,8 @@
 library(readr)
 library(dplyr)
-ufo_data <- read_csv("nuforc_reports.csv")
+
+ufo_data <- read_csv("~/Desktop/UCLA/Senior/Winter/Statistics 140XP/EDA/nuforc_reports.csv")
+
 
 ufo_data <- ufo_data %>% 
   mutate("Year" = year(date_time),
